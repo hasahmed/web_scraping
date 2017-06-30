@@ -1,13 +1,6 @@
 from lxml import html
 import requests
 
-'''
-#gets the actual links from the description of the video
-def getDONGLinks(url):
-    page = requests.get(url)
-    tree = html.fromstring(page.content)
-    return tree.xpath('//a/@href')
-    '''
 
 #used to get all of the links of all of the dongs from the dong youtube channel
 #from there these links will be used to load those pages and collect those dongs
@@ -15,27 +8,6 @@ def getAllLinks(url):
     page = requests.get(url)
     tree = html.fromstring(page.content)
     return tree.xpath('//a/@href')
-
-'''
-#gets the titles from the dong vid channel/videos
-def getVidTitles(url):
-    page = requests.get(url)
-    tree = html.fromstring(page.content)
-    return tree.xpath('//a/@title')
-    '''
-
-'''
-def makeDict(titles, links):
-    newDict = {}
-    if len(titles) != len(links):
-        errorString = 'The lengths of your arument lists do not match. Dictionary cannot be created\ntitles: %s\nlinks: %s' %(len(titles), len(links))
-        raise ValueError(errorString)
-    else:
-        for i in range(0, len(titles)):
-            newDict[titles[i]] = links[i]
-    return newDict
-    '''
-
 
 #removes the non playlist links from all the links collected from a playlist youtube page
 def rmNonPlstLinks(ls):
