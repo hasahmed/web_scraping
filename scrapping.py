@@ -10,5 +10,4 @@ dongVids = functions.collectLinksFromPlst(DONGChannelVidsUrl);
 for var in dongVids:
     print var
 
-print len(dongVids)
 #print len(set(vids))
