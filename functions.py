@@ -2,6 +2,50 @@ from lxml import html
 import requests
 
 
+#gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
+def gatherDONGs(DONGVidUrl):
+    page = requests.get(DONGVidUrl)
+    tree = html.fromstring(page.content)
+    return tree.xpath('//*[@id="eow-description"]/a/@href')
+
+#cleanDONGLinks: removes (or at least trys to) non-dong links
+# note to self. make function that removes most of this stuff
+# based on a few patterns. Utilize regex
+def cleanDONGLinks(links, ignoreContentList = [
+    'http://www.soundcloud.com/JakeChudnow',
+    'http://goo.gl/xKcZZ',
+    'https://docs.google.com/document/d/1UDrmnu6hVlLkx3jGdOXje_dmMeOQO3uEHDHwgY5sxyE/edit',
+    'http://www.facebook.com/Vsauce3',
+    'http://www.instagr.am/jakerawr',
+    'http://steamcommunity.com/groups/vsauce3',
+    'http://goo.gl/lXy3CX',
+    'http://www.twitter.com/vsaucethree',
+    'http://www.districtlines.com/vsauce',
+    'http://www.youtube.com/user/jakechudnow',
+    'http://www.youtube.com/Vsauce',
+    'http://www.youtube.com/Vsauce2',
+    'http://www.youtube.com/Vsauce3',
+    'http://www.youtube.com/wesauce'
+    'http://youtu.be/xsRiQQBQpCE',
+    'https://www.youtube.com/watch?v=DbobB1V0mL8&feature=mr_meh&list=PL9F828611D869B9BB&index=2&playnext=0',
+    'http://www.myspace.com/jakechudnow',
+    'https://www.curiositybox.com/',
+    'https://www.youtube.com/c/HannahCanetti',
+    'http://youtube.com/ericlanglay',
+    ]):
+    newLs = list(links)
+    toRemove = []
+    for i in range(0, len(links)):
+        for j in range(0, len(ignoreContentList)):
+            if ignoreContentList[j] in links[i]:
+                toRemove.append(links[i])
+    for var in toRemove:
+        try:
+            newLs.remove(var)
+        except ValueError:
+            pass
+    return newLs
+
 #used to get all of the links of all of the dongs from the dong youtube channel
 #from there these links will be used to load those pages and collect those dongs
 def getAllLinks(url):

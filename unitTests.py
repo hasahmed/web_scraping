@@ -17,6 +17,12 @@ class functionsTests(unittest.TestCase):
         functions.stripPlstInfo_ls(unstripped)
         self.assertEqual(unstripped, stripped)
 
+    def testCleanDONGLinks(self):
+        links = ['dude', 'hey', 'whats', 'up']
+        bad = ['dude', 'up', 'bad']
+        self.assertEqual(functions.cleanDONGLinks(links, bad), ['hey', 'whats'])
+        
+
 
 if __name__ == '__main__':
     unittest.main()
