@@ -1,5 +1,6 @@
 from lxml import html
 import requests
+import MySQLdb
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
@@ -95,3 +96,19 @@ def collectLinksFromPlst(url):
     prependYouTube_ls(vids)
     vids = removeDups(vids)
     return vids
+
+def sqlStringify(ls):
+    sqlString = ''
+    for i in range(0, len(ls)):
+        sqlString = sqlString + '(' +'\"' + ls[i] + '\"' + ')' + ', '
+    sqlString = sqlString[0:len(sqlString) -2]
+    return sqlString
+
+def sqlConnect():
+    db = MySQLdb.connect(host = 'silo.soic.indiana.edu',
+            user = 'whoever',
+            passwd = 'wha55up',
+            db = 'DONG',
+            port = 32904)
+    return db
+

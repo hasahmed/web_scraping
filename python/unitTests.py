@@ -21,6 +21,10 @@ class functionsTests(unittest.TestCase):
         links = ['dude', 'hey', 'whats', 'up']
         bad = ['dude', 'up', 'bad']
         self.assertEqual(functions.cleanDONGLinks(links, bad), ['hey', 'whats'])
+
+    def testSqlStringif(self):
+        self.assertEqual(functions.sqlStringify(['hey', 'whatsgoin', 'on?']),
+                '("hey"), ("whatsgoin"), ("on?")')
         
 
 

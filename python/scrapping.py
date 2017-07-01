@@ -30,7 +30,14 @@ allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
 
 allDONGLinks = functions.removeDups(allDONGLinks)
 
-for var in allDONGLinks:
-    print var
+
+db = functions.sqlConnect()
+cur = db.cursor()
+sqlStr = 'insert into links values ' + functions.sqlStringify(allDONGLinks)
+cur.execute(sqlStr)
+
+
+#for var in allDONGLinks:
+    #print var
 
 print len(allDONGLinks)
