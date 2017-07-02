@@ -23,6 +23,7 @@ def cleanDONGLinks(links, ignoreContentList = [
     'http://www.twitter.com/vsaucethree',
     'http://www.districtlines.com/vsauce',
     'http://www.youtube.com/user/jakechudnow',
+    'http://www.youtube.com/user/JAKECHUDNOW',
     'http://www.youtube.com/Vsauce',
     'http://www.youtube.com/Vsauce2',
     'http://www.youtube.com/Vsauce3',
@@ -33,6 +34,8 @@ def cleanDONGLinks(links, ignoreContentList = [
     'https://www.curiositybox.com/',
     'https://www.youtube.com/c/HannahCanetti',
     'http://youtube.com/ericlanglay',
+    'https://www.facebook.com/VsauceGaming',
+    'http://goo.gl/XEWDI'
     ]):
     newLs = list(links)
     toRemove = []
