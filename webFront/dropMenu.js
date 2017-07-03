@@ -1,5 +1,15 @@
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+var showAbout = function(element){
+    var para = element.parentElement.parentElement.parentElement.previousElementSibling;
+    if(para.hasAttribute('hidden')){
+        para.removeAttribute('hidden')
+    } else{
+        para.setAttribute('hidden', 'true');
+    }
+}
+
+var myFunction = function(button){
+    //document.getElementById("myDropdown").classList.toggle("show");
+    button.nextElementSibling.classList.toggle("show");
 }
 
 // Close the dropdown menu if the user clicks outside of it

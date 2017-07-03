@@ -30,7 +30,7 @@ tr{
     font-size:14px;    
 }
 
-#linkData{
+.linkData{
     padding:5px;
 }
 
@@ -53,16 +53,17 @@ tr{
                 <td align="center">
                     '. $i .'
                 </td>
-                <td id="linkData">
+                <td class="linkData">
                     <a id="links" target="_blank" href="'. $links[$i -1] .'">'. truncateText($links[$i]).'
                     </a>
+                    <p hidden class="about" >ayyeeee</p>
                     <div style="float: right; width:6%">
                         <div class="dropdown">
-                            <button class="dropbtn" onclick="myFunction()" type="button">&#x2022&#x2022&#x2022</button>
-                            <div id="myDropdown" class="dropdown-content">
-                                <a href="https://www.google.com/">google</a>
-                                <a href="#">Link2</a>
-                                <a href="#">Link3</a>
+                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
+                            <div class="dropdown-content">
+                                <a onclick="showAbout(this)">About</a>
+                                <a href="#">Add to favorites</a>
+                                <a href="#">Mark As Dead</a>
                                 <a href="#">Link4</a>
                             </div>
                         </div>
