@@ -1,4 +1,16 @@
+var serverString = 'http://silo.cs.indiana.edu:32903/phpworkspace/webscrapping/webFront/'
 var showAbout = function(element){
+    $.post(
+            serverString + 'test.php', 
+            {
+                testInfo:"farts",
+                name:"Donald Duck",
+                city:"Duckburg"
+            },
+            function(data, status){
+                console.log(data);
+            }
+        );
     var para = element.parentElement.parentElement.parentElement.previousElementSibling;
     if(para.hasAttribute('hidden')){
         para.removeAttribute('hidden')

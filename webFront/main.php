@@ -35,6 +35,7 @@ tr{
 }
 
 </style>
+    <script src="<?php echo dirname($_SERVER['jquery.js'])?>jquery.js" type="text/javascript"></script>
     <script src="<?php echo dirname($_SERVER['dropMenu.js'])?>dropMenu.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="<?php dirname($SERVER['dropMenu.css'])?>dropMenu.css"/>
     <a href=#bottom>Bottom of the Page</a>
