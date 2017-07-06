@@ -27,7 +27,12 @@ def cleanDONGLinks(links, ignoreContentList = [
     'http://www.youtube.com/Vsauce',
     'http://www.youtube.com/Vsauce2',
     'http://www.youtube.com/Vsauce3',
-    'http://www.youtube.com/wesauce'
+    'http://www.youtube.com/wesauce',
+    'vsauce',
+    'facebook',
+    'myspace',
+    'instagram',
+    'jakechundnow',
     'http://youtu.be/xsRiQQBQpCE',
     'https://www.youtube.com/watch?v=DbobB1V0mL8&feature=mr_meh&list=PL9F828611D869B9BB&index=2&playnext=0',
     'http://www.myspace.com/jakechudnow',
@@ -35,13 +40,16 @@ def cleanDONGLinks(links, ignoreContentList = [
     'https://www.youtube.com/c/HannahCanetti',
     'http://youtube.com/ericlanglay',
     'https://www.facebook.com/VsauceGaming',
-    'http://goo.gl/XEWDI'
+    'http://goo.gl/XEWDI',
+    'http://www.trevorvanmeter.com/flyguy/flyGuy.swf'
     ]):
     newLs = list(links)
     toRemove = []
     for i in range(0, len(links)):
         for j in range(0, len(ignoreContentList)):
-            if ignoreContentList[j] in links[i]:
+            if ignoreContentList[j].lower() in links[i].lower():
+                toRemove.append(links[i])
+            if 'youtube' in links[i].lower() and 'list' not in links[i].lower():
                 toRemove.append(links[i])
     for var in toRemove:
         try:

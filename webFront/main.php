@@ -40,6 +40,7 @@ tr{
     <link rel="stylesheet" type="text/css" href="<?php dirname($SERVER['dropMenu.css'])?>dropMenu.css"/>
     <a href=#bottom>Bottom of the Page</a>
     <a href='<?php echo dirname($_SERVER['about.php'])?>about.php'>About</a>
+    <a href="<?php echo dirname($_SERVER['PHP_SELF'])?>/views/login.php">Login</a>
     <center>
 <title>DONG Bucket</title>
 <body>

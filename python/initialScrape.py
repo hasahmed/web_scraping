@@ -33,11 +33,12 @@ allDONGLinks = functions.removeDups(allDONGLinks)
 
 db = functions.sqlConnect()
 cur = db.cursor()
-sqlStr = 'insert into links values ' + functions.sqlStringify(allDONGLinks)
+sqlStr = 'insert into links(link) values ' + functions.sqlStringify(allDONGLinks)
 cur.execute(sqlStr)
+db.close();
 
 
 #for var in allDONGLinks:
     #print var
 
-print len(allDONGLinks)
+print len(allDONGLinks), ' links scraped'
