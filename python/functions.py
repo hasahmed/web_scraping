@@ -57,7 +57,7 @@ def cleanDONGLinks(links, ignoreContentList = [
         try:
             newLs.remove(var)
         except ValueError:
-            pass
+            continue
     return newLs
 
 #used to get all of the links of all of the dongs from the dong youtube channel

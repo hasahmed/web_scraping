@@ -1,6 +1,7 @@
 from lxml import html
 import requests
 import functions
+from functions import DONGLink
 
 #DONGChannelVidsUrl: url of DONG channel dong
 DONGChannelVidsUrl = "https://www.youtube.com/watch?v=FfTAx4vlAh4&list=PLL0602iqqyiy6_ude-mFEJ7DRqqf0p-9o" 
@@ -27,25 +28,24 @@ for var in allVids:
     allDONGLinks = allDONGLinks + functions.gatherDONGs(var)
     break;
 
+#clean links and remove duplicates;
 allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
 allDONGLinks = functions.removeDups(allDONGLinks)
 
+
+#create list of DONGLink objects
 DONGLinkClassList = []
-
 for var in allDONGLinks:
-    DONGLinkClassList = DONGLinkClassList + DONGLink(var);
+    DONGLinkClassList.append(DONGLink(var));
 
-
-
+#connect to db
 db = functions.sqlConnect()
 cur = db.cursor()
-#sqlStr = 'insert into links(link) values ' + functions.sqlStringify(allDONGLinks)
-#cur.execute(sqlStr)
+
+#insert links and id's into db
+for var in DONGLinkClassList:
+    var.insert(cur);
+
 db.close();
-
-print DONGLinkClassList
-
-#for var in allDONGLinks:
-    #print var
 
 print len(allDONGLinks), ' links scraped'
