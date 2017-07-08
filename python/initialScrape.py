@@ -25,18 +25,25 @@ allDONGLinks = []
 
 for var in allVids:
     allDONGLinks = allDONGLinks + functions.gatherDONGs(var)
+    break;
 
 allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
-
 allDONGLinks = functions.removeDups(allDONGLinks)
+
+DONGLinkClassList = []
+
+for var in allDONGLinks:
+    DONGLinkClassList = DONGLinkClassList + DONGLink(var);
+
 
 
 db = functions.sqlConnect()
 cur = db.cursor()
-sqlStr = 'insert into links(link) values ' + functions.sqlStringify(allDONGLinks)
-cur.execute(sqlStr)
+#sqlStr = 'insert into links(link) values ' + functions.sqlStringify(allDONGLinks)
+#cur.execute(sqlStr)
 db.close();
 
+print DONGLinkClassList
 
 #for var in allDONGLinks:
     #print var
