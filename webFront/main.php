@@ -63,9 +63,9 @@ tr{
     <a style='float: right;' class='link' id='welcome' href='users/profile.php'>
     <?php
         if($_SESSION['user'] != NULL)
-            echo "{$_SESSION['user']}";
+            echo "{$_SESSION['user']} -- Profile";
         else echo "Guest";
-    ?> - Profile</a>
+    ?></a>
     <center>
 <title>DONG Bucket</title>
 <body>
@@ -75,7 +75,12 @@ tr{
     <br>
     <br>
     <table border="1">
-    <?php for($i = 1; $i < count($links); $i++){
+<?php 
+$showAll = $_GET['showall'];
+if($showAll == '')
+    $showAll = 'false';
+
+    for($i = 1; $i < count($links); $i++){
         echo '<tr>
                 <td align="center">
                     '. $i .'
@@ -97,10 +102,19 @@ tr{
                     </div>
                 </td>
               </tr>';
+        if($showAll == 'false')
+            if($i >= 100)
+                break;
 
 } ?>
     </table>
         <a id='bottom'></a>
+        <form action='main.php' method='GET'>
+        <br>
+        <input type="submit" value='Show All Links' style='padding: 16px;'>
+        <input hidden='true' name='showall' value='true'>
+        </form>
+        <br>
         <a href=#top style='font-size:10px;'>Top of Page</a>
         </center>
 </body>

@@ -1,4 +1,3 @@
-console.log("hey");
 var serverString = 'http://silo.cs.indiana.edu:32903/phpworkspace/webscrapping/webFront/'
 var showAbout = function(element){
     $.post(

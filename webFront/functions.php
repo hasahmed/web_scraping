@@ -62,8 +62,9 @@ function tenRandomElements($array){
 }
 
 function truncateText($str){
-    if (strlen($str) >= 75){
-        return substr($str, 0, 74) .'...';
+    $trunLen = 65; //the amount to truncate the text
+    if (strlen($str) >= $trunLen){
+        return substr($str, 0, ($trunLen -1)) .'...';
     }
     return $str;
 }

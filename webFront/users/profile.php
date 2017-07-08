@@ -14,7 +14,7 @@ if($_SESSION['user'] == NULL){
         <a href='../main.php'>Home</a>
         <center>
         <h1><?=$_SESSION['user'];?>'s Profile</h1>
-        <a style="padding:20px;" href='user_favorites.php'><?=$_SESSION['user']?>'s Favorites</a>
+        <a style="padding:20px;" href='user_favorites.php'>Favorites</a>
         <br>
         <br>
         <br>
