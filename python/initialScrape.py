@@ -26,7 +26,6 @@ allDONGLinks = []
 
 for var in allVids:
     allDONGLinks = allDONGLinks + functions.gatherDONGs(var)
-    break;
 
 #clean links and remove duplicates;
 allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
@@ -44,7 +43,10 @@ cur = db.cursor()
 
 #insert links and id's into db
 for var in DONGLinkClassList:
-    var.insert(cur);
+    pass
+#    var.insert(cur)
+
+DONGLink.insertLs(cur, DONGLinkClassList);
 
 db.close();
 
