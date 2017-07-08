@@ -36,8 +36,8 @@ function get_links(){
     $con = connect_and_select();
     $result = mysql_query("select * from links", $con);
     $array = array();
-    while($row = mysql_fetch_array($result, MYSQL_NUM)){
-        array_push($array, $row[0]);
+    while($row = mysql_fetch_array($result)){
+        array_push($array, $row['link']);
     }
     mysql_close($con);
     return $array;

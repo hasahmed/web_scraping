@@ -86,7 +86,7 @@ if($showAll == '')
                     '. $i .'
                 </td>
                 <td class="linkData">
-                    <a id="links" target="_blank" href="'. $links[$i -1] .'">'. truncateText($links[$i]).'
+                    <a id="links" target="_blank" href="'. $links[$i -1] .'">'. truncateText($links[$i -1]).'
                     </a>
                     <p hidden class="about" >ayyeeee</p>
                     <div style="float: right; width:6%">
