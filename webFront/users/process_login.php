@@ -3,18 +3,23 @@
     $user_username = $_POST['username'];
     $user_passwd = $_POST['passwd'];
     $con = connect_db('DONG_Users');
-    $query = "SELECT * FROM users WHERE username='$user_name'";
+    $query = "SELECT * FROM users WHERE username=\"$user_username\"";
     $result = mysql_query($query, $con);
-    echo print_r($result);
-    //TODO: if $result matches a values, check password. if password matches give key
-        /*
     if (!$result)
         die('invalid query: '. mysql_error($con));
-    else{
-        echo "<script> location.href=\"{$_SERVER['.']}/phpworkspace/webscrapping/webFront/main.php\"</script>";
+    $result = mysql_fetch_assoc($result);
+    //if ($result['passwd'] == crypt($user_passwd)){
+    if ($result['passwd'] == crypt($user_passwd, SALT)){
+        //TODO: find a way to verify passwords in php 5.1
+        session_start();
+        $_SESSION['user'] = $user_username;
+        echo "location.href='../main.php'";
+        //TODO: check to see if the else case is working by console.logging it in the login.js file
+
     }
-         */
+    else{
+        //TODO: add logic to notify user of invalid credentials
+        echo 'invalid credentials';
+    }
     mysql_close($con);
 ?>
-</body>
-</html>

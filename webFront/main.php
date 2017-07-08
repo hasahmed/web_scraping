@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 
 <?php
@@ -34,19 +37,41 @@ tr{
     padding:5px;
 }
 
+#welcome{
+    /*float: right;*/
+    /*position: relative;*/
+    /*top: -30px;*/
+}
+.link{
+    position: relative;
+    padding:16px;
+    top: 16px;
+    border: 1px solid white;
+}
+
+.link:hover{
+    border:1px solid blue;
+}
+
 </style>
-    <script src="<?php echo dirname($_SERVER['jquery.js'])?>jquery.js" type="text/javascript"></script>
-    <script src="<?php echo dirname($_SERVER['dropMenu.js'])?>dropMenu.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="<?php dirname($SERVER['dropMenu.css'])?>dropMenu.css"/>
-    <a href=#bottom>Bottom of the Page</a>
-    <a href='<?php echo dirname($_SERVER['about.php'])?>about.php'>About</a>
-    <a href="<?php echo dirname($_SERVER['PHP_SELF'])?>/views/login.php">Login</a>
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="dropMenu.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="dropMenu.css">
+    <a class='link' href=#bottom>Bottom of the Page</a>
+    <a class='link' href='about.php'>About</a>
+    <a class='link' href="views/login.php">Login</a>
+    <a style='float: right;' class='link' id='welcome' href='users/profile.php'>
+    <?php
+        if($_SESSION['user'] != NULL)
+            echo "{$_SESSION['user']}";
+        else echo "Guest";
+    ?> - Profile</a>
     <center>
 <title>DONG Bucket</title>
 <body>
-    <h1>DONG Bucket<h1>
-    <h2>Every DONG ever<h2>
-    <a href='<?php echo dirname($_SERVER['10RandomDONGs.php'])?>10RandomDONGs.php'>Click for 10 Random DONGs</a>
+    <h1 style="clear: right">DONG Bucket</h1>
+    <h2>Every DONG ever</h2>
+    <a href='10RandomDONGs.php'>Click for 10 Random DONGs</a>
     <br>
     <br>
     <table border="1">

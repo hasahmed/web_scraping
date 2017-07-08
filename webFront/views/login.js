@@ -18,12 +18,32 @@ var login = function(){
                 passwd: passwd
             },
             function(data, status){
-                console.log(data);
+                try {
+                    eval(data);
+                } catch(SyntaxError){
+                    console.log(data);
+                }
             }
         );
 }
 
-
 var createAccount = function(){
-    console.log('create account');
+    var username = document.getElementById('username').value;
+    var passwd = document.getElementById('passwd').value;
+    alertIfUnfilled();
+    var serverStr = 'http://silo.cs.indiana.edu:32903/phpworkspace/webscrapping/webFront/users/process_create_account.php';
+    $.post(
+            serverStr,
+            {
+                username: username,
+                passwd: passwd
+            },
+            function(data, status){
+                try {
+                    eval(data);
+                } catch(SyntaxError){
+                    console.log('lettuce');
+                }
+            }
+        );
 }
