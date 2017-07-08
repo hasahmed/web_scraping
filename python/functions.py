@@ -33,6 +33,7 @@ def cleanDONGLinks(links, ignoreContentList = [
     'myspace',
     'instagram',
     'jakechundnow',
+    'twitter.com',
     'http://youtu.be/xsRiQQBQpCE',
     'https://www.youtube.com/watch?v=DbobB1V0mL8&feature=mr_meh&list=PL9F828611D869B9BB&index=2&playnext=0',
     'http://www.myspace.com/jakechudnow',
