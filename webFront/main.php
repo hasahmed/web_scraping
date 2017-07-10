@@ -80,7 +80,7 @@ $showAll = $_GET['showall'];
 if($showAll == '')
     $showAll = 'false';
 
-    for($i = 1; $i < count($links); $i++){
+    for($i = 1; $i <= count($links); $i++){
         echo '<tr>
                 <td align="center">
                     '. $i .'

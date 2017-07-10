@@ -2,7 +2,7 @@
     require('userFuncs.php');
     $user_username = $_POST['username'];
     $user_passwd = $_POST['passwd'];
-    $con = connect_db('DONG_Users');
+    $con = connect_db('DONG');
     $query = "SELECT * FROM users WHERE username=\"$user_username\"";
     $result = mysql_query($query, $con);
     if (!$result)

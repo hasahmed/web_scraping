@@ -21,6 +21,7 @@ function connect_db($db){
       die('Could not connect: ' . mysql_error());
 }
 
+/*
 function get_links(){
     $con = connect_and_select();
     $result = mysql_query("select * from links", $con);
@@ -32,5 +33,6 @@ function get_links(){
     return $array;
 }
 
+ */
 
 ?>
