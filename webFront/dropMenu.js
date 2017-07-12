@@ -22,36 +22,6 @@ var getLink = function(element){
     return element.parentElement.parentElement.parentElement.previousElementSibling;
 }
 
-//strips the number off of the end of a string. Still returns a string
-var stripNum = function(str){
-    for(var i = 0; i < str.length; i++){
-        if (!isNaN(str[i]))
-            return str.substring(i);
-    }
-    throw "Error: You have tried to parse a string does not contain a number";
-}
-
-//add a link to the users favorites
-var addToFavorites = function(element){
-    var linkNum = stripNum(element.id);
-    var url = document.getElementById("links" + linkNum).href;
-    serverString = 'controller/addFave.php';
-    $.post(
-            serverString,
-            {
-                url: url
-            },
-            function(data, status){
-                try { 
-                    eval(data);
-                } catch(e){
-                    console.log(e);
-                    console.log(data);
-                }
-            }
-        );
-}
-
 var myFunction = function(button){
     //document.getElementById("myDropdown").classList.toggle("show");
     button.nextElementSibling.classList.toggle("show");

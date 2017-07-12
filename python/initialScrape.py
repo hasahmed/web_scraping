@@ -35,19 +35,8 @@ allDONGLinks = functions.removeDups(allDONGLinks)
 #create list of DONGLink objects
 DONGLinkClassList = []
 for var in allDONGLinks:
-    DONGLinkClassList.append(DONGLink(var));
+    DONGLinkClassList.append(DONGLink(var))
 
-#connect to db
-db = functions.sqlConnect()
-cur = db.cursor()
-
-#insert links and id's into db
-for var in DONGLinkClassList:
-    pass
-#    var.insert(cur)
-
-DONGLink.insertLs(cur, DONGLinkClassList);
-
-db.close();
+functions.sqlInsertDONGLinkList(DONGLinkClassList)
 
 print len(allDONGLinks), ' links scraped'

@@ -5,7 +5,9 @@ session_start();
 
 <?php
 require('functions.php');
+require('model/model.php');
 $links = get_links();
+$linkObjs = getLinkArray();
 ?>
 <html>
 <head>
@@ -32,6 +34,7 @@ tr{
 .linkData{
     padding:5px;
     font-size: 16px;
+    width: 600px;
 }
 
 #welcome{
@@ -53,6 +56,8 @@ tr{
 </style>
     <script src="jquery.js" type="text/javascript"></script>
     <script src="dropMenu.js" type="text/javascript"></script>
+    <script src="controller/addFave.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="dropMenu.css">
     <a class='link' href=#bottom>Bottom of the Page</a>
     <a class='link' href='about.php'>About</a>

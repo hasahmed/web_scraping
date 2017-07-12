@@ -1,6 +1,7 @@
 from lxml import html
 import requests
 import MySQLdb
+import uuid
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
@@ -124,24 +125,17 @@ def sqlConnect():
             port = 32904)
     return db
 
+def sqlInsertDONGLinkList(ls):
+    db = sqlConnect();
+    cur = db.cursor();
+    for var in ls:
+        var.insert(cur)
+    db.close();
+
 class DONGLink:
     'This object describes the characteristics of a DONG link'
-    def truncateLink(self):
-        cutoff = 255
-        if len(self.link) > cutoff:
-            return str(self.link[0 : cutoff])
-        else:
-            return self.link
     def __init__(self, url):
         self.link = url
-        self.id = self.truncateLink()
+        self.id = uuid.uuid4();
     def insert(self, cur):
-        try:
-            cur.execute('INSERT INTO links SET link = "%s", id = "%s"' %(self.link, self.id))
-        except(MySQLdb.IntegrityError):
-            pass
-    @staticmethod
-    def insertLs(cur, ls):
-        for var in ls:
-            var.insert(cur);
-
+        cur.execute('INSERT IGNORE INTO links SET link = "%s", id = "%s"' %(self.link, self.id))

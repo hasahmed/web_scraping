@@ -64,25 +64,6 @@ function takeToLogin($folder = '/', $eval = false){
     echo $scriptOpen, "location.href = ", $qu,  $preStr, $loginLoc, $qu, $scriptClose; 
 }
 
-function get_links(){
-    $con = connect_and_select();
-    $result = mysql_query("select * from links", $con);
-    $array = array();
-    while($row = mysql_fetch_array($result)){
-        array_push($array, $row['link']);
-    }
-    mysql_close($con);
-    return $array;
-
-}
-//dont forget mysql_close($con);
-function delete($link, $con){
-    $query = "delete from quotes where link = $link";
-    $suc = mysql_query($query, $con);
-    if($suc)
-        return true;
-    return false;
-}
 
 function tenRandomElements($array){
     shuffle($array);

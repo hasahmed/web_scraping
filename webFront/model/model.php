@@ -15,12 +15,43 @@ function connect(){
 
 function addFave($user, $favid){
     $con = connect();
-    $sqlStr = "insert into faves set username = '$user', favid = '$favid';";
+    $sqlStr = "INSERT IGNORE INTO faves SET username = '$user', favid = '$favid';";
     $stat = mysql_query($sqlStr, $con);
     if (!$stat){
         die('there has been an error'. mysql_error());
         mysql_close($con);
     }
     mysql_close($con);
+    return $stat;
+}
+class Link{
+    public $url = NULL;
+    public $id = NULL;
+    function __construct($url, $id){
+        $this->url = $url;
+        $this->id = $id;
+    }
+}
+
+function getLinkArray(){
+    $con = connect_and_select();
+    $result = mysql_query("select link id from links", $con);
+    $array = array();
+    while($row = mysql_fetch_assoc($result)){
+        array_push($array, new Link($row['link'], $row['id']));
+    }
+    mysql_close($con);
+    return $array;
+}
+
+function get_links(){
+    $con = connect_and_select();
+    $result = mysql_query("select * from links", $con);
+    $array = array();
+    while($row = mysql_fetch_array($result)){
+        array_push($array, $row['link']);
+    }
+    mysql_close($con);
+    return $array;
 }
 ?>
