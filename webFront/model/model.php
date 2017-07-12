@@ -33,9 +33,38 @@ class Link{
     }
 }
 
+function htmlTableGen($linkObjs, $showAll = false){
+    $str = '';
+    for($i = 1; $i <= count($linkObjs); $i++){
+        $str = $str .'<tr>
+                <td align="center">
+                    '. $i .'
+                </td>
+                <td class="linkData">
+                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->url).'
+                    </a>
+                    <p hidden class="about" >ayyeeee</p>
+                    <div style="float: right; width:6%">
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
+                            <div class="dropdown-content">
+                                <a onclick="showAbout(this)">About</a>
+                                <a id="fav'.$i.'" onclick="addToFavorites(this)">Add to favorites</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+              </tr>';
+        if($showAll == 'false' || $showAll == false)
+            if($i >= 100)
+                break;
+    }
+    return $str;
+}
+
 function getLinkArray(){
-    $con = connect_and_select();
-    $result = mysql_query("select link id from links", $con);
+    $con = connect();
+    $result = mysql_query("SELECT link, id FROM links", $con);
     $array = array();
     while($row = mysql_fetch_assoc($result)){
         array_push($array, new Link($row['link'], $row['id']));

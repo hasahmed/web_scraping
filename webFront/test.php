@@ -1,7 +1,5 @@
 <?php  
-echo " <!DOCTYPE html>
-        <html>
-            <p> {$_POST['testInfo']} </p>
-        </html>
-";
+require('model/model.php');
+//print_r(getLinkArray());
+$str = "str" + "str";
 ?>

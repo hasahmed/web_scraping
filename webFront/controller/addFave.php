@@ -6,7 +6,7 @@ if ($_SESSION['user'] == NULL){
     exit();
 }
 require('../model/model.php');
-$added = addfave($_SESSION['user'], $_POST['url']);
+$added = addfave($_SESSION['user'], $_POST['id']);
 if ($added)
     echo "<true>";
 else 

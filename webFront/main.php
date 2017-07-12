@@ -73,7 +73,7 @@ tr{
 <body>
     <h1 style="clear: right">DONG Bucket</h1>
     <h2>Every DONG ever</h2>
-    <a href='10RandomDONGs.php'>Click for 10 Random DONGs</a>
+    <a href='views/10RandomDONGs.php'>Click for 10 Random DONGs</a>
     <br>
     <br>
     <table border="1">
@@ -81,32 +81,8 @@ tr{
 $showAll = $_GET['showall'];
 if($showAll == '')
     $showAll = 'false';
-
-    for($i = 1; $i <= count($links); $i++){
-        echo '<tr>
-                <td align="center">
-                    '. $i .'
-                </td>
-                <td class="linkData">
-                    <a id="links'.$i.'" target="_blank" href="'. $links[$i - 1] .'">'. truncateText($links[$i - 1]).'
-                    </a>
-                    <p hidden class="about" >ayyeeee</p>
-                    <div style="float: right; width:6%">
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
-                            <div class="dropdown-content">
-                                <a onclick="showAbout(this)">About</a>
-                                <a id="fav'.$i.'" onclick="addToFavorites(this)">Add to favorites</a>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-              </tr>';
-        if($showAll == 'false')
-            if($i >= 100)
-                break;
-
-} ?>
+echo htmlTableGen($linkObjs, $showAll);
+?>
     </table>
         <a id='bottom'></a>
         <form action='main.php' method='GET'>

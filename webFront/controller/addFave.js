@@ -8,10 +8,12 @@ var stripNum = function(str){
 }
 
 var showSuccess = function(){
+    alert("Successfully added to your Favorites");
     //TODO add logic to display a html element for a few seconds saying
     // that adding the link was a success
 }
 var showFailure = function(){
+    alert("Failed to add to your Favorites");
     //TODO add logic to display a html element for a few seconds saying
     // that adding the link was a failure
 }
@@ -19,12 +21,17 @@ var showFailure = function(){
 //add a link to the users favorites
 var addToFavorites = function(element){
     var linkNum = stripNum(element.id);
-    var url = document.getElementById("links" + linkNum).href;
+    var ele = document.getElementById("links" + linkNum);
+    var id = ele.dataset.linkId;
+    if(id == '' || undefined)
+        throw "Error: id undefined";
+    //var id = ele.value; 
+    //console.log(id);
     serverString = 'controller/addFave.php';
     $.post(
             serverString,
             {
-                url: url
+                id: id
             },
             function(data, status){
                 try { 
