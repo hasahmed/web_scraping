@@ -22,7 +22,7 @@ function connect_and_select(){
 function connect_db($db){
   $con = mysql_connect('silo.soic.indiana.edu:32904', 'whoever', 'wha55up');
   if ($con){ 
-    if( mysql_select_db($db, $con ))// database 
+    if(mysql_select_db($db, $con))// database 
         return $con;
     else
         die('Could not connect: ' . mysql_error());
@@ -31,6 +31,38 @@ function connect_db($db){
       die('Could not connect: ' . mysql_error());
 }
 
+
+function isInjectorFree($str){
+   if(!strpos($str, ';') && !strpos($str, '=')) 
+       return true;
+   return false;
+}
+
+//dont forget mysql_close($db);
+
+// takeToLogin: [String], [Bool] -> Void;
+// takeToLogin($folder, $eval) : The optional folder argument specifies which
+// directory the function is being called from. If omitted it assumes the root
+// of the application. The eval argument is also optional and simply specifies if
+// the string is going to be executed by a javascript eval function, which would
+// imply that the php script was envoked by a call to $.post(); 
+function takeToLogin($folder = '/', $eval = false){
+    $loginLoc = "views/login.php";
+    $qu = "\"";
+    if ($folder == '/' || 'top')
+        $prestr = './'; 
+    else if($folder == 'controler' || $folder == 'model' || $folder == 'views')
+        $preStr = '../';
+    if(!$eval){
+        $scriptOpen = "<script>";
+        $scriptClose = ";</script>";
+    }
+    else {
+        $scriptOpen = "";
+        $scriptClose = "";
+    } 
+    echo $scriptOpen, "location.href = ", $qu,  $preStr, $loginLoc, $qu, $scriptClose; 
+}
 
 function get_links(){
     $con = connect_and_select();

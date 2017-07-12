@@ -29,12 +29,9 @@ tr{
 */
 }
 
-#links{
-    font-size:14px;    
-}
-
 .linkData{
     padding:5px;
+    font-size: 16px;
 }
 
 #welcome{
@@ -86,7 +83,7 @@ if($showAll == '')
                     '. $i .'
                 </td>
                 <td class="linkData">
-                    <a id="links" target="_blank" href="'. $links[$i -1] .'">'. truncateText($links[$i -1]).'
+                    <a id="links'.$i.'" target="_blank" href="'. $links[$i - 1] .'">'. truncateText($links[$i - 1]).'
                     </a>
                     <p hidden class="about" >ayyeeee</p>
                     <div style="float: right; width:6%">
@@ -94,9 +91,7 @@ if($showAll == '')
                             <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
                             <div class="dropdown-content">
                                 <a onclick="showAbout(this)">About</a>
-                                <a href="#">Add to favorites</a>
-                                <a href="#">Mark As Dead</a>
-                                <a href="#">Link4</a>
+                                <a id="fav'.$i.'" onclick="addToFavorites(this)">Add to favorites</a>
                             </div>
                         </div>
                     </div>
