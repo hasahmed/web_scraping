@@ -1,12 +1,17 @@
 <?php
 session_start();
+if($_SESSION['user'] != NULL){
+    echo "<script>location.href='../controller/logout.php';</script>";
+}
+echo '<script>console.log("'. $_SESSION['user'] .'");</script>';
+require('viewres/templates.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>DONG Bucket</title>
+<?php insertLoginViewHeader(); ?>
 </head>
-<a href='../main.php'>Home</a>
 <center>
 <h1>DONG Bucket - Login </h1>
     <h2> Hello
@@ -21,9 +26,7 @@ session_start();
 !
     </h2>
 <body>
-<script src='../jquery.js' type='text/javascript'></script>
-<script src='login.js' type='text/javascript'></script>
-    <form action="/phpworkspace/webscrapping/webFront/users/logout.php" method="post">
+    <form action="../controller/logout.php" method="post">
         <table>
             <tr> 
                 <td>

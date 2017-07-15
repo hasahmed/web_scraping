@@ -10,7 +10,7 @@ var login = function(){
     var username = document.getElementById('username').value;
     var passwd = document.getElementById('passwd').value;
     alertIfUnfilled();
-    var serverStr = '../users/process_login.php';
+    var serverStr = '../controller/process_login.php';
     $.post(
             serverStr,
             {
@@ -18,6 +18,7 @@ var login = function(){
                 passwd: passwd
             },
             function(data, status){
+                //console.log(data);
                 try {
                     eval(data);
                 } catch(SyntaxError){
@@ -31,7 +32,7 @@ var createAccount = function(){
     var username = document.getElementById('username').value;
     var passwd = document.getElementById('passwd').value;
     alertIfUnfilled();
-    var serverStr = '../users/process_create_account.php';
+    var serverStr = '../controller/process_create_account.php';
     $.post(
             serverStr,
             {
@@ -42,7 +43,7 @@ var createAccount = function(){
                 try {
                     eval(data);
                 } catch(SyntaxError){
-                    console.log('lettuce');
+                    console.log(data);
                 }
             }
         );

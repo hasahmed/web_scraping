@@ -1,23 +1,24 @@
 <!doctype html>
 <?php
-require('../functions.php');
 require('../model/model.php');
-$links = get_links();
-$links = tenRandomElements($links);
+require('viewres/templates.php');
+$linkObjs = getLinkArray();
+$linkObjs = tenRandomElements($linkObjs);
 ?>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="dropMenu.css">
-    <a href='../main.php'>Home</a>
+<?php
+insertViewHeader();
+?>
         <center>
 <title>DONG Bucket</title>
 <body>
     <h1>DONG Bucket<h1>
     <h2>10 Random DONGs<h2>
-    <a href='10RandomDONGs.php'>Click for 10 other random DONGs</a>
-    <?php for($i = 0; $i < count($links); $i++){
-            echo '<p style="line-height:1px;"><a target="_blank" style="font-size:14px;" href="'. $links[$i] .'">'. truncateText($links[$i]).'</a></p>';
-} ?>
+    <a style="display: block; padding: 20px;" href='10RandomDONGs.php'>Click for 10 other random DONGs</a>
+    <?php 
+    echo  htmlTableGen($linkObjs, false);
+?>
         </center>
 </body>
 </head>

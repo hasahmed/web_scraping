@@ -3,15 +3,22 @@ session_start();
 if ($_SESSION['user'] == NULL){
     echo "<script>location.href='login.php';</script>";
 }
-require('../functions.php');
+require('../model/model.php');
+require('viewres/templates.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+<?php insertViewHeader(); ?>
+<title>DONG Bucket - Favorites</title>
 </head>
 <body>
+    <center>
+    <h1>DONG Bucket<h1>
+    <h2><?=$_SESSION['user']?>'s Favorites<h2>
 <?php
-    echo '<p> this is your fave';
+echo faveTable($_SESSION['user']);
 ?>
+</center>
 </body>
 </html>
