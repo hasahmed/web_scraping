@@ -1,36 +1,4 @@
 <?php 
-function debug_to_console( $data ) {
-    $output = $data;
-    if ( is_array( $output ) )
-        $output = implode( ',', $output);
-    echo "<script>console.log( 'Debug Objects:" . $output . "' );</script>";
-}
-
-function connect_and_select(){
-  $con = mysql_connect('silo.soic.indiana.edu:32904', 'whoever', 'wha55up');
-  if ($con){ 
-    if( mysql_select_db( "DONG", $con ))// database 
-        return $con;
-    else
-        die('Could not connect: ' . mysql_error());
-  }
-  else
-      die('Could not connect: ' . mysql_error());
-}
-
-
-function connect_db($db){
-  $con = mysql_connect('silo.soic.indiana.edu:32904', 'whoever', 'wha55up');
-  if ($con){ 
-    if(mysql_select_db($db, $con))// database 
-        return $con;
-    else
-        die('Could not connect: ' . mysql_error());
-  }
-  else
-      die('Could not connect: ' . mysql_error());
-}
-
 
 function isInjectorFree($str){
    if(!strpos($str, ';') && !strpos($str, '=')) 
@@ -71,11 +39,10 @@ function tenRandomElements($array){
     for($i = 0; $i < 10; $i++)
         array_push($newArr, $array[$i]);
     return $newArr;
-
 }
 
 function truncateText($str){
-    $trunLen = 65; //the amount to truncate the text
+    $trunLen = 60; //the amount to truncate the text
     if (strlen($str) >= $trunLen){
         return substr($str, 0, ($trunLen -1)) .'...';
     }

@@ -1,4 +1,8 @@
 <?php
+require('../controller/util.php');
+
+define('SALT', 'w5');
+
 function connect(){
   $con = mysql_connect('silo.soic.indiana.edu:32904', 'whoever', 'wha55up');
   if ($con){ 
@@ -11,6 +15,76 @@ function connect(){
       die('Could not connect: ' . mysql_error());
 }
 //dont forget mysql_close($db);
+
+function getFaveIdArray($username){
+    $con = connect();
+    $arr = array();
+    $query = "select favid from faves where username=\"$username\"";
+    $resource = mysql_query($query, $con);
+    while($result = mysql_fetch_assoc($resource)){
+        array_push($arr, $result['favid']);
+    }
+    mysql_close($con);
+    return $arr;
+}
+
+function buildLinkList($favidArray){
+    $con = connect();
+    $array = array();
+    for ($i = 0; $i < count($favidArray); $i++){
+        $query = "SELECT link, id, title FROM links WHERE id = \"$favidArray[$i]\"";
+        $result = mysql_query($query, $con);
+        $row = mysql_fetch_assoc($result);
+        array_push($array, new Link($row['link'], $row['id'], $row['title']));
+    }
+    mysql_close($con);
+    return $array;
+}
+
+function faveTable($username){
+    return htmlTableGenForFaves(buildLinkList(getFaveIdArray($username)), true);
+}
+
+
+function process_login($uname, $passwd){
+    if(!isInjectorFree($uname) || !isInjectorFree($passwd)){
+        echo 'alert(Invalid characters detected)';
+        return;
+    }
+    $con = connect();
+    $query = "SELECT passwd FROM users WHERE username=\"$uname\"";
+    $result = mysql_query($query, $con);
+    if (!$result)
+        die('erorr: '. mysql_error($con));
+    $result = mysql_fetch_array($result);;
+    if (!$result){
+        die('invalid query:'. mysql_error($con));
+    }
+    if ($result['passwd'] == crypt($passwd, SALT)){
+        session_start();
+        $_SESSION['user'] = $uname;
+        echo "location.href='main.php'";
+    }
+    mysql_close($con);
+}
+
+function process_create_account($uname, $passwd){
+    if(!isInjectorFree($uname) || !isInjectorFree($passwd)){
+        echo 'alert(Invalid characters detected)';
+        return;
+    }
+    $con = connect();
+    $query = 'INSERT INTO users SET username = "'. $uname .'", passwd = "'. crypt($passwd, SALT) .'"';
+    $result = mysql_query($query, $con);
+    if (!$result)
+        die('erorr: '. mysql_error($con));
+    session_start();
+    $_SESSION['user'] = $uname;
+    echo "location.href='main.php'";
+
+
+    mysql_close($con);
+}
 
 
 function addFave($user, $favid){
@@ -27,21 +101,68 @@ function addFave($user, $favid){
 class Link{
     public $url = NULL;
     public $id = NULL;
-    function __construct($url, $id){
+    public $title = NULL;
+    function __construct($url, $id, $title){
         $this->url = $url;
         $this->id = $id;
+        $this->title = $title;
     }
 }
 
-function htmlTableGen($linkObjs, $showAll = false){
-    $str = '';
+function deleteFave($userId, $favId){
+    if(!isInjectorFree($userId) AND !isInjectorFree($favId)){
+        return "<false>";
+    }
+    $con = connect();
+    $sqlString = "DELETE FROM faves WHERE favid = '$favId' AND username = '$userId'";
+    $suc = mysql_query($sqlString, $con);
+    if($suc) 
+        return "<true>";
+    else
+        return "<false>";
+}
+
+
+function htmlTableGenForFaves($linkObjs, $showAll = false){
+    $str = '<table border=1>';
     for($i = 1; $i <= count($linkObjs); $i++){
         $str = $str .'<tr>
                 <td align="center">
                     '. $i .'
                 </td>
                 <td class="linkData">
-                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->url).'
+                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
+                    </a>
+                    <p hidden class="about" >ayyeeee</p>
+                    <div style="float: right; width:6%">
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
+                            <div class="dropdown-content">
+                                <a onclick="showAbout(this)">About</a>
+                                <a id="fav'.$i.'" onclick="deleteFavorite(this)">Delete Favorite</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+              </tr>';
+        if($showAll == 'false' || $showAll == false)
+            if($i >= 100)
+                break;
+    }
+    $str = $str.'</table>';
+    return $str;
+}
+
+
+function htmlTableGen($linkObjs, $showAll = false){
+    $str = '<table border=1>';
+    for($i = 1; $i <= count($linkObjs); $i++){
+        $str = $str .'<tr>
+                <td align="center">
+                    '. $i .'
+                </td>
+                <td class="linkData">
+                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
                     </a>
                     <p hidden class="about" >ayyeeee</p>
                     <div style="float: right; width:6%">
@@ -59,15 +180,16 @@ function htmlTableGen($linkObjs, $showAll = false){
             if($i >= 100)
                 break;
     }
+    $str = $str.'</table>';
     return $str;
 }
 
 function getLinkArray(){
     $con = connect();
-    $result = mysql_query("SELECT link, id FROM links", $con);
+    $result = mysql_query("SELECT link, id, title FROM links", $con);
     $array = array();
     while($row = mysql_fetch_assoc($result)){
-        array_push($array, new Link($row['link'], $row['id']));
+        array_push($array, new Link($row['link'], $row['id'], $row['title']));
     }
     mysql_close($con);
     return $array;

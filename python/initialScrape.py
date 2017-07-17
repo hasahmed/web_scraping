@@ -31,11 +31,13 @@ for var in allVids:
 allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
 allDONGLinks = functions.removeDups(allDONGLinks)
 
-
 #create list of DONGLink objects
 DONGLinkClassList = []
 for var in allDONGLinks:
     DONGLinkClassList.append(DONGLink(var))
+
+for var in DONGLinkClassList:
+    print var.title
 
 functions.sqlInsertDONGLinkList(DONGLinkClassList)
 

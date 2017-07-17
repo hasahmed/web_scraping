@@ -1,5 +1,7 @@
 <?php
-    require('userFuncs.php');
+    require('../model/model.php');
+    process_create_account($_POST['username'], $_POST['passwd']);
+/*
     $user_username = $_POST['username'];
     $user_passwd = $_POST['passwd'];
     $con = connect_db('DONG');
@@ -22,4 +24,5 @@
        }
     }
     mysql_close($con);
+ */
 ?>

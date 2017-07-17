@@ -2,12 +2,31 @@ from lxml import html
 import requests
 import MySQLdb
 import uuid
+import sys
+
+
+def getTitle(url):
+    try:
+        page = requests.get(url, timeout=5)
+    except:
+        return -1 #-1 is the code which means delete this link because it doesn't work
+    try:
+        tree = html.fromstring(page.content)
+    except(html.etree.XMLSyntaxError):
+        return False
+    title = tree.xpath('//title/text()')
+    if not title: return False #false means that the page searched doesn't have a title
+    elif "404" in title[0] or "403" in title[0] or "no such app" in title[0].lower(): return -1
+    else: return title[0]#if the page does have a title strip it form the list
+   # else: return title[0].strip('"').strip("'") #if the page does have a title strip it form the list
+    #else: return title[0].replace("'", '').replace('"', '').strip('"').strip("'") #if the page does have a title strip it form the list
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
 def gatherDONGs(DONGVidUrl):
     page = requests.get(DONGVidUrl)
     tree = html.fromstring(page.content)
+    print "Gathering DONGs..."
     return tree.xpath('//*[@id="eow-description"]/a/@href')
 
 #cleanDONGLinks: removes (or at least trys to) non-dong links
@@ -16,6 +35,8 @@ def gatherDONGs(DONGVidUrl):
 def cleanDONGLinks(links, ignoreContentList = [
     'http://www.soundcloud.com/JakeChudnow',
     'http://goo.gl/xKcZZ',
+    'fb.me',
+    'http://www.jakechudnow.com/',
     'https://docs.google.com/document/d/1UDrmnu6hVlLkx3jGdOXje_dmMeOQO3uEHDHwgY5sxyE/edit',
     'http://www.facebook.com/Vsauce3',
     'http://www.instagr.am/jakerawr',
@@ -31,6 +52,7 @@ def cleanDONGLinks(links, ignoreContentList = [
     'http://www.youtube.com/wesauce',
     'vsauce',
     'facebook',
+    'youtu.be',
     'myspace',
     'instagram',
     'jakechundnow',
@@ -136,6 +158,24 @@ class DONGLink:
     'This object describes the characteristics of a DONG link'
     def __init__(self, url):
         self.link = url
-        self.id = uuid.uuid4();
+        self.id = uuid.uuid4()
+        self.title = getTitle(url)
+        if not self.title:
+            self.title = url
+        elif self.title == -1:
+            pass
+        else: self.title = self.title
+        self.printDONG()
+    def printDONG(self):
+        print self.title
+        print self.id
+        print self.link
+        print ""
     def insert(self, cur):
-        cur.execute('INSERT IGNORE INTO links SET link = "%s", id = "%s"' %(self.link, self.id))
+        print "Inserting..."
+        if self.title != -1:
+            try:
+                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s'
+                cur.execute(cmd, (self.link, self.id, self.title))
+            except:
+                pass

@@ -18,6 +18,23 @@ var showFailure = function(){
     // that adding the link was a failure
 }
 
+var deleteFavorite = function(element){
+    var linkNum = stripNum(element.id);
+    var ele = document.getElementById("links" + linkNum);
+    var id = ele.dataset.linkId;
+    if(id == '' || undefined)
+        throw "Error: id undefined";
+    serverString = '../controller/deleteFavorite.php';
+    $.post(serverString, {id: id}, function(data, status){
+            if(data === "<true>"){
+                location.href = 'user_favorites.php';
+            }
+            else if(data == "<false>"){
+                alert("Failed to delete from favorites");
+        }
+    });
+};
+
 //add a link to the users favorites
 var addToFavorites = function(element){
     var linkNum = stripNum(element.id);
@@ -25,9 +42,7 @@ var addToFavorites = function(element){
     var id = ele.dataset.linkId;
     if(id == '' || undefined)
         throw "Error: id undefined";
-    //var id = ele.value; 
-    //console.log(id);
-    serverString = 'controller/addFave.php';
+    serverString = '../controller/addFave.php';
     $.post(
             serverString,
             {
@@ -41,6 +56,9 @@ var addToFavorites = function(element){
                         showSuccess("Successfully added to Favorites");
                     else if (data === "<false>")
                         showFailure("Failed to add to Favorites")
+                    else{
+                        console.log(data);
+                    }
                 }
             }
         );
