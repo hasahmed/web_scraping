@@ -30,10 +30,18 @@ def gatherDONGs(DONGVidUrl):
     tree = html.fromstring(page.content)
     print "Gathering DONGs..."
     DONGList = tree.xpath('//*[@id="eow-description"]/a/@href') #this is every link in the description of the video
-    DONGList = removeDups(cleanDONGLinks(DONGList)) #this removes the garbagio
+    DONGList = removeDups(cleanDONGLinks(DONGList)) #this removes the non-DONG links
+
+    storedIds = getStoredIds() #array of ids already stored in db
+
     DONGLinkClassArray = []
     for var in DONGList:
-        DONGLinkClassArray.append(DONGLink(DONGVidUrl, var))
+        try:
+            id = hashlib.sha1(var).hexdigest()
+        except:
+            id = False
+        if id != False and id not in storedIds:
+            DONGLinkClassArray.append(DONGLink(DONGVidUrl, var)) #create an array of DONGLink's
 
     sqlInsertDONGLinkList(DONGLinkClassArray)
     return DONGLinkClassArray
@@ -158,9 +166,25 @@ def sqlConnect():
             port = 32904)
     return db
 
+#getStoredIds: void -> Array
+#getStoredIds: retrieves from mysql all the ids of links that are already stored there and returns them in an array 
+# this will be used in gatherDONGs function in order to save some work and some waiting
+def getStoredIds():
+    db = sqlConnect()
+    cur = db.cursor()
+    query = "SELECT id FROM links"
+    cur.execute(query)
+    result = cur.fetchall()
+    db.close()
+
+    arr = []
+    for var in result:
+        arr.append(var[0])
+    return arr 
+
 def sqlInsertDONGLinkList(ls):
-    db = sqlConnect();
-    cur = db.cursor();
+    db = sqlConnect()
+    cur = db.cursor()
     for var in ls:
         var.insert(cur)
     db.close();
