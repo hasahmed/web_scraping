@@ -22,23 +22,11 @@ vsauce3DONGVids = functions.collectLinksFromPlst(vsauce3ChannelVidsUrl)
 #allVids: just all the links to all the DONG videos in a single list
 allVids = vsauce3DONGVids + vsauceDONGVids + DONGDONGVids
 
-allDONGLinks = []
+arrayOfDONGLinkClass = []
 
 for var in allVids:
-    allDONGLinks = allDONGLinks + functions.gatherDONGs(var)
+    arrayOfDONGLinkClass = arrayOfDONGLinkClass + functions.gatherDONGs(var)
 
-#clean links and remove duplicates;
-allDONGLinks = functions.cleanDONGLinks(allDONGLinks)
-allDONGLinks = functions.removeDups(allDONGLinks)
+#functions.sqlInsertDONGLinkList(arrayOfDONGLinkClass)
 
-#create list of DONGLink objects
-DONGLinkClassList = []
-for var in allDONGLinks:
-    DONGLinkClassList.append(DONGLink(var))
-
-for var in DONGLinkClassList:
-    print var.title
-
-functions.sqlInsertDONGLinkList(DONGLinkClassList)
-
-print len(allDONGLinks), ' links scraped'
+print len(arrayOfDONGLinkClass), ' links scraped'

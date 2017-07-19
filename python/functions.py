@@ -3,6 +3,7 @@ import requests
 import MySQLdb
 import hashlib
 import sys
+import unicodedata
 
 
 def getTitle(url):
@@ -23,12 +24,19 @@ def getTitle(url):
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
-#returns an array containing the links from the particular video
+#returns an array of DONGLink's 
 def gatherDONGs(DONGVidUrl):
     page = requests.get(DONGVidUrl)
     tree = html.fromstring(page.content)
     print "Gathering DONGs..."
-    return tree.xpath('//*[@id="eow-description"]/a/@href')
+    DONGList = tree.xpath('//*[@id="eow-description"]/a/@href') #this is every link in the description of the video
+    DONGList = removeDups(cleanDONGLinks(DONGList)) #this removes the garbagio
+    DONGLinkClassArray = []
+    for var in DONGList:
+        DONGLinkClassArray.append(DONGLink(DONGVidUrl, var))
+
+    sqlInsertDONGLinkList(DONGLinkClassArray)
+    return DONGLinkClassArray
 
 #cleanDONGLinks: removes (or at least trys to) non-dong links
 # note to self. make function that removes most of this stuff
@@ -37,6 +45,7 @@ def cleanDONGLinks(links, ignoreContentList = [
     'http://www.soundcloud.com/JakeChudnow',
     'http://goo.gl/xKcZZ',
     'fb.me',
+    'instagr.am',
     'http://www.jakechudnow.com/',
     'https://docs.google.com/document/d/1UDrmnu6hVlLkx3jGdOXje_dmMeOQO3uEHDHwgY5sxyE/edit',
     'http://www.facebook.com/Vsauce3',
@@ -156,13 +165,26 @@ def sqlInsertDONGLinkList(ls):
         var.insert(cur)
     db.close();
 
+def norm(str):
+    try:
+        str = unicodedata.normalize('NFKD', str).encode('ascii', 'ignore')
+        return str
+    except TypeError:
+        return str
+
 
 class DONGLink:
     'This object describes the characteristics of a DONG link'
-    def __init__(self, url):
+    def __init__(self, parentVidUrl, url):
+        self.video = parentVidUrl
         self.link = url
-        self.id = hashlib.sha1(url) 
-        self.title = getTitle(url)
+        try:
+            self.id = hashlib.sha1(url).hexdigest()
+        except:
+            self.id = "error hashing url"
+            self.writeErrorMesage()
+
+        self.title = norm(getTitle(url))
         if not self.title:
             self.title = url
         elif self.title == -1:
@@ -170,15 +192,32 @@ class DONGLink:
         else: self.title = self.title
         self.printDONG()
     def printDONG(self):
-        print self.title
-        print self.id
-        print self.link
-        print ""
+        print self.toString()
+
+    def toString(self):
+        return "DONG ID: " + str(self.id) + "\n"\
+                + "    Title: " + str(self.title) + "\n"\
+                + "    Link: " + str(self.link) + "\n"\
+                + "    Video: " + norm(self.video) + "\n\n" 
+
+
+    def writeErrorMesage(self):
+        print 'ERROR\n\n\n\n\n\nCHECK ERROR LOG!\n'
+        errFile = open('errorLog', 'w')
+        errFile.write('\n\nRelevant DONG Info:\n')
+        errFile.write(self.toString())
+        errFile.write('Error Message \n')
+        errFile.write(sys.exc_info()[0])
+        errFile.write('\n\n\n\n')
+        errFile.close()
+
     def insert(self, cur):
         print "Inserting..."
         if self.title != -1:
             try:
-                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s'
-                cur.execute(cmd, (self.link, self.id, self.title))
+                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s, video = %s'
+                cur.execute(cmd, (self.link, self.id, self.title, self.video))
+                print "success"
             except:
-                pass
+                self.writeErrorMessage()
+
