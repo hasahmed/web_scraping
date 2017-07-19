@@ -1,7 +1,7 @@
 from lxml import html
 import requests
 import MySQLdb
-import uuid
+import hashlib
 import sys
 
 
@@ -23,6 +23,7 @@ def getTitle(url):
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
+#returns an array containing the links from the particular video
 def gatherDONGs(DONGVidUrl):
     page = requests.get(DONGVidUrl)
     tree = html.fromstring(page.content)
@@ -124,6 +125,7 @@ def prependYouTube_ls(listOfURLs):
 def removeDups(ls):
     return list(set(ls))
 
+#collects the vsauce DONG video links from a playlist containing all the videos
 def collectLinksFromPlst(url):
     vids = getAllLinks(url)
     vids = rmNonPlstLinks(vids)
@@ -154,11 +156,12 @@ def sqlInsertDONGLinkList(ls):
         var.insert(cur)
     db.close();
 
+
 class DONGLink:
     'This object describes the characteristics of a DONG link'
     def __init__(self, url):
         self.link = url
-        self.id = uuid.uuid4()
+        self.id = hashlib.sha1(url) 
         self.title = getTitle(url)
         if not self.title:
             self.title = url
