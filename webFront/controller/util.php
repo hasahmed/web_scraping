@@ -15,11 +15,11 @@ function isInjectorFree($str){
 // the string is going to be executed by a javascript eval function, which would
 // imply that the php script was envoked by a call to $.post(); 
 function takeToLogin($folder = '/', $eval = false){
-    $loginLoc = "views/login.php";
+    $loginLoc = "login.php";
     $qu = "\"";
     if ($folder == '/' || 'top')
         $prestr = './'; 
-    else if($folder == 'controler' || $folder == 'model' || $folder == 'views')
+    else if($folder == 'controller' || $folder == 'model' || $folder == 'views')
         $preStr = '../';
     if(!$eval){
         $scriptOpen = "<script>";

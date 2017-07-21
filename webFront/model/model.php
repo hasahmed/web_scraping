@@ -51,7 +51,7 @@ function buildLinkList($favidArray){
 }
 
 function faveTable($username){
-    return htmlTableGenForFaves(buildLinkList(getFaveIdArray($username)), true);
+    return htmlTableGen(buildLinkList(getFaveIdArray($username)), true, true);
 }
 
 
@@ -132,38 +132,15 @@ function deleteFave($userId, $favId){
 }
 
 
-function htmlTableGenForFaves($linkObjs, $showAll = false){
-    $str = '<table border=1>';
-    for($i = 1; $i <= count($linkObjs); $i++){
-        $str = $str .'<tr>
-                <td align="center">
-                    '. $i .'
-                </td>
-                <td class="linkData">
-                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
-                    </a>
-                    <p hidden class="about" >ayyeeee</p>
-                    <div style="float: right; width:6%">
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
-                            <div class="dropdown-content">
-                                <a id="about'.$i.'" onclick="showAbout(this)">About</a>
-                                <a id="fav'.$i.'" onclick="deleteFavorite(this)">Delete Favorite</a>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-              </tr>';
-        if($showAll == 'false' || $showAll == false)
-            if($i >= 100)
-                break;
+function htmlTableGen($linkObjs, $showAll = false, $faves = false){
+    if($faves){
+        $addOrDelete = "deleteFavorite(this)";
+        $text = "Delete Favortie";
     }
-    $str = $str.'</table>';
-    return $str;
-}
-
-
-function htmlTableGen($linkObjs, $showAll = false){
+    else{
+        $addOrDelete = "addToFavorites(this)";
+        $text = "Add to Favorites";
+    } 
     $str = '<table border=1>';
     for($i = 1; $i <= count($linkObjs); $i++){
         $str = $str .'<tr>
@@ -179,7 +156,7 @@ function htmlTableGen($linkObjs, $showAll = false){
                             <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
                             <div class="dropdown-content">
                                 <a id="about'.$i.'" onclick="showAbout(this)">About</a>
-                                <a id="fav'.$i.'" onclick="addToFavorites(this)">Add to favorites</a>
+                                <a id="fav'.$i.'" onclick="'. $addOrDelete .'">'. $text .'</a>
                             </div>
                         </div>
                     </div>
