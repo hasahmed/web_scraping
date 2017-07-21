@@ -28,6 +28,15 @@ function getFaveIdArray($username){
     return $arr;
 }
 
+function getVideo($linkID){
+    $con = connect();
+    $query = "select video from links where id=\"$linkID\"";
+    $resource = mysql_query($query, $con);
+    $result = mysql_fetch_assoc($resource);
+    mysql_close($con);
+    return $result['video'];
+}
+
 function buildLinkList($favidArray){
     $con = connect();
     $array = array();
@@ -138,7 +147,7 @@ function htmlTableGenForFaves($linkObjs, $showAll = false){
                         <div class="dropdown">
                             <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
                             <div class="dropdown-content">
-                                <a onclick="showAbout(this)">About</a>
+                                <a id="about'.$i.'" onclick="showAbout(this)">About</a>
                                 <a id="fav'.$i.'" onclick="deleteFavorite(this)">Delete Favorite</a>
                             </div>
                         </div>
@@ -164,12 +173,12 @@ function htmlTableGen($linkObjs, $showAll = false){
                 <td class="linkData">
                     <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
                     </a>
-                    <p hidden class="about" >ayyeeee</p>
+                    <p id="linknum'.$i.'" hidden class="about" ></p>
                     <div style="float: right; width:6%">
                         <div class="dropdown">
                             <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
                             <div class="dropdown-content">
-                                <a onclick="showAbout(this)">About</a>
+                                <a id="about'.$i.'" onclick="showAbout(this)">About</a>
                                 <a id="fav'.$i.'" onclick="addToFavorites(this)">Add to favorites</a>
                             </div>
                         </div>

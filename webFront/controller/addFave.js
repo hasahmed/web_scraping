@@ -1,3 +1,40 @@
+var showAbout = function(element){
+    var linkNum = stripNum(element.id);
+    var par = document.getElementById("linknum" + linkNum);
+    /*
+    if(par.getAttribute('hidden') == null){
+       par.setAttribute('hidden', 'true'); 
+       return;
+    }
+    */
+    var vis = par.getAttribute('hidden');
+    if(par.children[0] != undefined){
+        if(vis === 'true' || vis === ''){
+            par.setAttribute('hidden', true);
+            return;
+        } else par.removeAttribute('hidden');
+    }
+    var ele = document.getElementById("links" + linkNum);
+    var linkID = ele.dataset.linkId;
+    var serverString = "../controller/";
+    $.post(
+            serverString + 'aboutLink.php', 
+            {
+                linkID: linkID
+            },
+            function(data, status){
+                var a = document.createElement("a");
+                var linkText = document.createTextNode(data)
+                a.appendChild(linkText);
+                a.href = data;
+                a.title = "Vsauce Video";
+                var paraText = document.createTextNode("DONG Video: ")
+                par.removeAttribute('hidden');
+                par.appendChild(paraText);
+                par.appendChild(a);
+            }
+        );
+}
 //strips the number off of the end of a string. Still returns a string
 var stripNum = function(str){
     for(var i = 0; i < str.length; i++){

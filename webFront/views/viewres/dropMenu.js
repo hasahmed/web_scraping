@@ -1,24 +1,3 @@
-var showAbout = function(element){
-    var serverString = "../controller/";
-    $.post(
-            serverString + 'aboutLink.php', 
-            {
-                testInfo:"farts",
-                name:"Donald Duck",
-                city:"Duckburg"
-            },
-            function(data, status){
-                console.log(data);
-            }
-        );
-    var para = element.parentElement.parentElement.parentElement.previousElementSibling;
-    if(para.hasAttribute('hidden')){
-        para.removeAttribute('hidden')
-    } else{
-        para.setAttribute('hidden', 'true');
-    }
-}
-
 var getLink = function(element){
     return element.parentElement.parentElement.parentElement.previousElementSibling;
 }
