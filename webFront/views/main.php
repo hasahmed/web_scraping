@@ -16,19 +16,13 @@ $linkObjs = getLinkArray();
 insertViewHeader();
 insertSubNavBar(); 
 ?>
-    <?php
-        if($_SESSION['user'] != NULL)
-            echo "{$_SESSION['user']} -- Profile";
-        else echo "Guest";
-    ?></a>
-    <center>
 <title>DONG Bucket</title>
 <body>
-    <h1 style="clear: right">DONG Bucket</h1>
-    <h2>Every DONG ever</h2>
-    <a href='10RandomDONGs.php'>Click for 10 Random DONGs</a>
-    <br>
-    <br>
+    <div id="header">
+        <h1 class="align-center">DONG Bucket</h1>
+        <h2 class="align-center">Every DONG ever</h2>
+        <a class="align-center link" href='10RandomDONGs.php'>Click for 10 Random DONGs</a>
+    </div>
 <?php 
 $showAll = $_GET['showall'];
 if($showAll == '')
@@ -38,12 +32,13 @@ echo htmlTableGen($linkObjs, $showAll);
         <a id='bottom'></a>
         <form action='main.php' method='GET'>
         <br>
-        <input type="submit" value='Show All Links' style='padding: 16px;'>
+    <div class="align-center">
+        <input class"header link" type="submit" value='Show All Links' style='padding: 16px;'>
         <input hidden='true' name='showall' value='true'>
         </form>
         <br>
-        <a href=#top style='font-size:10px;'>Top of Page</a>
-        </center>
+        <a class="align-center link" href=#top style='font-size:10px;'>Top of Page</a>
+    </div>
 </body>
 </head>
 </html>

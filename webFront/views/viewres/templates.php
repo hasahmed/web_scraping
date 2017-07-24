@@ -27,6 +27,17 @@ function insertSubNavBar(){
     </div>
         ';
 }
+function insertMainNavBar(){
+    echo'
+    <div id="topnav">
+        <ul>
+            <li><a class="bar-item" href="about.php">About</a></li>
+            <li><a class="bar-item" href="login.php">Login/Logout</a></li>
+            <li><a class="bar-item" href="main.php">Home</a></li>
+            <li><a class="bar-item" href="profile.php">Profile</a></li>
+    </div>
+        ';
+}
 
 function insertProfileHeader(){
     echo'

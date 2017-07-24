@@ -141,7 +141,7 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
         $addOrDelete = "addToFavorites(this)";
         $text = "Add to Favorites";
     } 
-    $str = '<table border=1>';
+    $str = '<table class="center-table" border=1>';
     for($i = 1; $i <= count($linkObjs); $i++){
         $str = $str .'<tr>
                 <td align="center">
