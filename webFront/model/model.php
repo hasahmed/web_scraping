@@ -148,7 +148,7 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
                     '. $i .'
                 </td>
                 <td class="linkData">
-                    <a data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
+                    <a class="dongs" data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
                     </a>
                     <p id="linknum'.$i.'" hidden class="about" ></p>
                     <div style="float: right; width:6%">

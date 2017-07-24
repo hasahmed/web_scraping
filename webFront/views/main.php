@@ -12,8 +12,10 @@ $linkObjs = getLinkArray();
 ?>
 <html>
 <head>
-<?php insertViewHeader(); ?>
-    <a style='float: right;' class='link' id='welcome' href='profile.php'>
+<?php 
+insertViewHeader();
+insertSubNavBar(); 
+?>
     <?php
         if($_SESSION['user'] != NULL)
             echo "{$_SESSION['user']} -- Profile";
