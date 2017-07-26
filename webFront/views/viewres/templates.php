@@ -8,6 +8,7 @@ function insertViewHeader(){
     <meta name="author" content="Hasan Y Ahmed">
     <script src="viewres/jquery.js" type="text/javascript"></script>
     <script src="viewres/dropMenu.js" type="text/javascript"></script>
+    <script src="viewres/mobilswitch.js" type="text/javascript"></script>
     <script src="../controller/addFave.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="viewres/dropMenu.css">
     <link rel="stylesheet" type="text/css" href="viewres/mainStyle.css">
@@ -21,7 +22,7 @@ function insertSubNavBar(){
     <div id="sub-topnav">
         <ul>
             <li><a class="sub-bar-item" href="about.php">About</a></li>
-            <li><a class="sub-bar-item" href="login.php">Login/Logout</a></li>
+            <li><a class="sub-bar-item" href="login.php">Login</a></li>
             <li><a class="sub-bar-item" href="main.php">Home</a></li>
             <li><a class="sub-bar-item" href="profile.php">Profile</a></li>
     </div>
@@ -32,7 +33,7 @@ function insertMainNavBar(){
     <div id="topnav">
         <ul>
             <li><a class="bar-item" href="about.php">About</a></li>
-            <li><a class="bar-item" href="login.php">Login/Logout</a></li>
+            <li><a class="bar-item" href="login.php">Login</a></li>
             <li><a class="bar-item" href="main.php">Home</a></li>
             <li><a class="bar-item" href="profile.php">Profile</a></li>
     </div>

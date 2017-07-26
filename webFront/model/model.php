@@ -141,17 +141,17 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
     } 
     $str = '<table class="main-table">';
     for($i = 1; $i <= count($linkObjs); $i++){
-        $str = $str .'<tr>
-                <td align="center">
+        $str = $str .'<tr class="link-row">
+                <td align="center" class="link-col link-num">
                     '. $i .'
                 </td>
-                <td class="linkData">
-                    <a class="dongs" data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. truncateText($linkObjs[$i - 1]->title).'
+                <td class="linkData link-col">
+                <a class="dongs truncate" data-link-id="'. $linkObjs[$i -1]->id .'" id="links'.$i.'" target="_blank" href="'. $linkObjs[$i - 1]->url .'">'. /*truncateText(*/$linkObjs[$i - 1]->title/*, 30) */.'
                     </a>
                     <p id="linknum'.$i.'" hidden class="about" ></p>
                     <div style="float: right; width:6%">
                         <div class="dropdown">
-                            <button class="dropbtn" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
+                            <button class="dropbtn button" onclick="myFunction(this)" type="button">&#x2022&#x2022&#x2022</button>
                             <div class="dropdown-content">
                                 <a id="about'.$i.'" onclick="showAbout(this)">About</a>
                                 <a id="fav'.$i.'" onclick="'. $addOrDelete .'">'. $text .'</a>

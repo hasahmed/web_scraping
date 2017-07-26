@@ -1,5 +1,10 @@
-.dropbtn {
+.dropbtn{
+    position: relative;
+    background-color: #333333;
+    color: #707A7A;
+    text-align: center;
     cursor: pointer; 
+    right: 50%;
 }
 
 .dropbtn:hover, .dropbtn:focus {

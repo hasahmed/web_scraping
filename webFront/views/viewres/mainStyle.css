@@ -7,24 +7,29 @@ html{
     background-size: cover;
 }
 body{
-    /*text-align: center;*/
+
 }
 table.main-table{
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    box-shadow: 5px 5px 5px #303133; /* dark gray */
+    box-shadow: 5px 5px 5px #303133;
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
-    background-color: #785CDF; /* purpule */
+    background-color: #785CDF; 
 }
-tr:nth-child(even){
+tr.link-row:nth-child(even){
     background-color: #7257d1;
 }
+/*
+tr.link-row{
+    overflow: hidden;
+    overflow-text: ellipsis;
+    width: 30px;
+}
+*/
 
-td{
+td.link-num{
     font-size:12px;
-    width: 4em;
+    width: 5%;
 }
 #header{
     clear: both;
@@ -40,12 +45,23 @@ td{
     padding-bottom: 5em;
 } 
 
-.linkData{
+td.linkData{
     padding:5px;
     font-size: 16px;
-    width: 600px;
 }
 .dongs{
     text-decoration: none;
     color: black;
+}
+.truncate{
+    display: block;
+    width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media screen and (max-width: 480px){
+    .truncate{
+        width: 220px;
+    }
 }
