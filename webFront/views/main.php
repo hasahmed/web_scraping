@@ -24,7 +24,9 @@ insertSubNavBar();
         <a class="align-center link" href='10RandomDONGs.php'>Click for 10 Random DONGs</a>
     </div>
 <?php 
-$showAll = $_GET['showall'];
+if(isset($_GET['showall']))
+    $showAll = $_GET['showall'];
+else $showAll = 'false';
 if($showAll == '')
     $showAll = 'false';
 echo htmlTableGen($linkObjs, $showAll);

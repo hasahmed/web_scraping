@@ -1,5 +1,6 @@
 html{
-    background: url("bg_homepage_1.svg") no-repeat center scroll;
+    width: 100%;
+    background: url("bg_homepage_1.svg") no-repeat center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -8,12 +9,17 @@ html{
 body{
     /*text-align: center;*/
 }
-table.center-table{
+table.main-table{
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    box-shadow: 5px 5px 5px #303133; /* dark gray */
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid black;
     border-collapse: collapse;
-    background-color: white;
+    background-color: #785CDF; /* purpule */
+}
+tr:nth-child(even){
+    background-color: #7257d1;
 }
 
 td{
@@ -41,4 +47,5 @@ td{
 }
 .dongs{
     text-decoration: none;
+    color: black;
 }

@@ -4,15 +4,13 @@ require('../controller/util.php');
 define('SALT', 'w5');
 
 function connect(){
-  $con = mysql_connect('silo.soic.indiana.edu:32904', 'whoever', 'wha55up');
-  if ($con){ 
-    if(mysql_select_db('DONG', $con))// database 
-        return $con;
-    else
-        die('Could not connect: ' . mysql_error());
+  $con = mysqli_connect('silo.soic.indiana.edu', 'whoever', 'wha55up', 'DONG', 32904);
+  if (!$con){ 
+      die('Could not connect: ' . mysqli_connect_error());
   }
-  else
-      die('Could not connect: ' . mysql_error());
+  else{
+      return $con;
+  }
 }
 //dont forget mysql_close($db);
 
@@ -141,7 +139,7 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
         $addOrDelete = "addToFavorites(this)";
         $text = "Add to Favorites";
     } 
-    $str = '<table class="center-table" border=1>';
+    $str = '<table class="main-table">';
     for($i = 1; $i <= count($linkObjs); $i++){
         $str = $str .'<tr>
                 <td align="center">
@@ -172,12 +170,19 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
 
 function getLinkArray(){
     $con = connect();
-    $result = mysql_query("SELECT link, id, title FROM links", $con);
+    $result = mysqli_query($con, "SELECT link, id, title FROM links");
     $array = array();
-    while($row = mysql_fetch_assoc($result)){
+    /*
+    while($row = mysqli_fetch_assoc($result)){
         array_push($array, new Link($row['link'], $row['id'], $row['title']));
     }
-    mysql_close($con);
+     */
+    $numRows = mysqli_num_rows($result);
+    for($i = 0; $i < $numRows; $i++){
+        $row = mysqli_fetch_assoc($result);
+        array_push($array, new Link($row['link'], $row['id'], $row['title']));
+    }
+    mysqli_close($con);
     return $array;
 }
 

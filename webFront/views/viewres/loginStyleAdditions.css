@@ -1,0 +1,24 @@
+#login-container{
+    position: absolute;
+    left: 0px;
+    top: 40%;
+    width: 100%;
+}
+#login-table{
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding: 30px;
+    background-color: #785CDF; /* purpule */
+    box-shadow: 5px 5px 5px #303133; /* dark gray */
+}
+.button{
+    background-color: #333333;
+    color: #707A7A;
+    /*padding: 10px 32px;*/
+    width: 150px;
+    text-align: center;
+
+}
+.med-text{
+    font-size: 20px;
+}

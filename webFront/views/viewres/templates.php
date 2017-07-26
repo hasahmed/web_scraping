@@ -53,6 +53,7 @@ function insertProfileHeader(){
     <a class="link" href="main.php">Home</a>
     ';
 }
+/*
 
 function insertLoginViewHeader(){
     echo'
@@ -68,4 +69,5 @@ function insertLoginViewHeader(){
     <a class="link" href="main.php">Home</a>
     ';
 }
+ */
 ?>

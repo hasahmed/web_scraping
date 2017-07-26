@@ -1,35 +1,26 @@
 <?php
 session_start();
-if($_SESSION['user'] != NULL){
-    echo "<script>location.href='../controller/logout.php';</script>";
-}
-echo '<script>console.log("'. $_SESSION['user'] .'");</script>';
 require('viewres/templates.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>DONG Bucket</title>
-<?php insertLoginViewHeader(); ?>
+<?php 
+insertViewHeader();
+insertSubNavBar();
+?>
+<link rel="stylesheet" type="text/css" href="viewres/loginStyleAdditions.css">
 </head>
 <center>
 <h1>DONG Bucket - Login </h1>
-    <h2> Hello
-        <?php 
-            if ($_SESSION['user'] != NULL){
-                echo $_SESSION['user'];
-            } 
-            else{
-                echo 'Guest';
-            }
-?>
-!
-    </h2>
+    <h2> Hello Stranger </h2>
 <body>
+<div id="login-container">
     <form action="../controller/logout.php" method="post">
-        <table>
+        <table id="login-table">
             <tr> 
-                <td>
+                <td class="med-text">
                     Username
                 </td>
                 <td>
@@ -37,7 +28,7 @@ require('viewres/templates.php');
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="med-text">
                 Password
                 </td>
                 <td>
@@ -46,24 +37,26 @@ require('viewres/templates.php');
             </tr>
             <tr>
                 <td>
-                <input value='Login' type='button', onclick='login()'/><br>
+                <input class="button" value='Login' type='button', onclick='login()'/><br>
                 </td>
             </tr>
             <tr>
                 <td>
-                <input value='Create Account' type='button', onclick='createAccount()'/><br>
+                <input class="button" value='Create Account' type='button', onclick='createAccount()'/><br>
                 </td>
             </tr>
             <?php
-            if($_SESSION['user'] != '')
+            if(isset($_SESSION['user']) && $_SESSION['user'] != '')
                 echo "
             <tr>
                 <td>
-                <input value='Logout' type='submit'/><br>
+                <input class='button' value='Logout' type='submit'/><br>
                 </td>
             </tr>
             "
             ?>
+    </form>
+</div>
 </center>
 </body>
 </html>
