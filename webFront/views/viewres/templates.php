@@ -16,6 +16,12 @@ function insertViewHeader(){
     <link rel="stylesheet" type="text/css" href="viewres/barStyle.css">
     ';
 }
+function insertLoginAdditionallReqs(){
+    echo '
+    <script src="viewres/jquery.js" type="text/javascript"></script>
+    <script src="viewres/login.js" type="text/javascript"></script>
+    ';
+}
 
 function insertSubNavBar(){
     echo'

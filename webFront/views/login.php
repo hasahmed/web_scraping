@@ -9,6 +9,7 @@ require('viewres/templates.php');
 <?php 
 insertViewHeader();
 insertSubNavBar();
+insertLoginAdditionallReqs();
 ?>
 <link rel="stylesheet" type="text/css" href="viewres/loginStyleAdditions.css">
 </head>

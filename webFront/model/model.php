@@ -18,11 +18,11 @@ function getFaveIdArray($username){
     $con = connect();
     $arr = array();
     $query = "select favid from faves where username=\"$username\"";
-    $resource = mysql_query($query, $con);
-    while($result = mysql_fetch_assoc($resource)){
+    $resource = mysqli_query($con, $query);
+    while($result = mysqli_fetch_assoc($resource)){
         array_push($arr, $result['favid']);
     }
-    mysql_close($con);
+    mysqli_close($con);
     return $arr;
 }
 
@@ -40,11 +40,11 @@ function buildLinkList($favidArray){
     $array = array();
     for ($i = 0; $i < count($favidArray); $i++){
         $query = "SELECT link, id, title FROM links WHERE id = \"$favidArray[$i]\"";
-        $result = mysql_query($query, $con);
-        $row = mysql_fetch_assoc($result);
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_assoc($result);
         array_push($array, new Link($row['link'], $row['id'], $row['title']));
     }
-    mysql_close($con);
+    mysqli_close($con);
     return $array;
 }
 
@@ -60,10 +60,10 @@ function process_login($uname, $passwd){
     }
     $con = connect();
     $query = "SELECT passwd FROM users WHERE username=\"$uname\"";
-    $result = mysql_query($query, $con);
+    $result = mysqli_query($con, $query);
     if (!$result)
         die('erorr: '. mysql_error($con));
-    $result = mysql_fetch_array($result);;
+    $result = mysqli_fetch_assoc($result);;
     if (!$result){
         die('invalid query:'. mysql_error($con));
     }
@@ -72,7 +72,7 @@ function process_login($uname, $passwd){
         $_SESSION['user'] = $uname;
         echo "location.href='main.php'";
     }
-    mysql_close($con);
+    mysqli_close($con);
 }
 
 function process_create_account($uname, $passwd){
@@ -97,12 +97,12 @@ function process_create_account($uname, $passwd){
 function addFave($user, $favid){
     $con = connect();
     $sqlStr = "INSERT IGNORE INTO faves SET username = '$user', favid = '$favid';";
-    $stat = mysql_query($sqlStr, $con);
+    $stat = mysqli_query($con, $sqlStr);
     if (!$stat){
         die('there has been an error'. mysql_error());
-        mysql_close($con);
+        mysqli_close($con);
     }
-    mysql_close($con);
+    mysqli_close($con);
     return $stat;
 }
 class Link{
