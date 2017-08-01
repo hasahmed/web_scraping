@@ -61,7 +61,7 @@ var deleteFavorite = function(element){
     var id = ele.dataset.linkId;
     if(id == '' || undefined)
         throw "Error: id undefined";
-    serverString = '../controller/deleteFavorite.php';
+    serverString = '../controller/deleteFavorite.php'; 
     $.post(serverString, {id: id}, function(data, status){
             if(data === "<true>"){
                 location.href = 'user_favorites.php';
@@ -69,6 +69,9 @@ var deleteFavorite = function(element){
             else if(data == "<false>"){
                 alert("Failed to delete from favorites");
         }
+            else{
+                alert("There seems to have been an error. Please alert the developer");
+            }
     });
 };
 

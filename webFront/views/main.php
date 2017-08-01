@@ -13,7 +13,7 @@ $linkObjs = getLinkArray();
 <html>
 <head>
 <?php 
-insertViewHeader();
+insertViewRequires();
 insertSubNavBar(); 
 ?>
 <title>DONG Bucket</title>

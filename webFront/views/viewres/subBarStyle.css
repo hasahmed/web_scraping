@@ -8,7 +8,7 @@ ul{
   font-family: Arial;
   font-size: 16px;
   max-width: 20%;
-  float: right;
+  float: left;
   text-decoration: none;
   text-align: center;
   color: #777A7A; /* light gray */
@@ -35,4 +35,7 @@ ul{
     position: absolute;
     top:0px;
     left:0px;
+}
+#sub-topnav-spacer{
+    margin-top: 40px;
 }

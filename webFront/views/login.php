@@ -7,9 +7,9 @@ require('viewres/templates.php');
 <head>
 <title>DONG Bucket</title>
 <?php 
-insertViewHeader();
+insertViewRequires();
 insertSubNavBar();
-insertLoginAdditionallReqs();
+insertLoginRequires();
 ?>
 <link rel="stylesheet" type="text/css" href="viewres/loginStyleAdditions.css">
 </head>

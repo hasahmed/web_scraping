@@ -9,7 +9,11 @@ require('viewres/templates.php');
 <html>
 <head>
 <title> DONG Bucket - User Profile </title>
-<?php insertProfileHeader(); ?>
+<?php 
+    insertViewRequires();
+    insertProfileRequires();
+    insertSubNavBar();
+?>
 </head>
     <body>
         <center>

@@ -122,11 +122,15 @@ function deleteFave($userId, $favId){
     }
     $con = connect();
     $sqlString = "DELETE FROM faves WHERE favid = '$favId' AND username = '$userId'";
-    $suc = mysql_query($sqlString, $con);
-    if($suc) 
+    $suc = mysqli_query($con, $sqlString);
+    if($suc){
+        mysqli_close($con);
         return "<true>";
-    else
+    } 
+    else{
+        mysqli_close($con);
         return "<false>";
+    }
 }
 
 
@@ -139,7 +143,10 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
         $addOrDelete = "addToFavorites(this)";
         $text = "Add to Favorites";
     } 
-    $str = '<table class="main-table">';
+    $str = '
+        <div id="main-table-container">
+            <table class="main-table">
+        ';
     for($i = 1; $i <= count($linkObjs); $i++){
         $str = $str .'<tr class="link-row">
                 <td align="center" class="link-col link-num">
@@ -164,7 +171,10 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
             if($i >= 100)
                 break;
     }
-    $str = $str.'</table>';
+    $str = $str.'
+            </table>
+        </div>
+        ';
     return $str;
 }
 
