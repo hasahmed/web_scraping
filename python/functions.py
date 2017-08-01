@@ -274,7 +274,7 @@ class DONGLink:
         print "Inserting..."
         if self.title != -1:
             try:
-                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s, video = %s, sauceDate = %s'
+                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s, video = %s, sauce_date = %s'
                 cur.execute(cmd, (self.link, self.id, self.title, self.video, self.sauceDate))
                 print "success"
             except:
