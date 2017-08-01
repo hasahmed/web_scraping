@@ -27,6 +27,4 @@ arrayOfDONGLinkClass = []
 for var in allVids:
     arrayOfDONGLinkClass = arrayOfDONGLinkClass + functions.gatherDONGs(var)
 
-#functions.sqlInsertDONGLinkList(arrayOfDONGLinkClass)
-
 print len(arrayOfDONGLinkClass), ' links scraped'

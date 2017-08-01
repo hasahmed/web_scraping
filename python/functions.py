@@ -4,6 +4,8 @@ import MySQLdb
 import hashlib
 import sys
 import unicodedata
+import time
+import datetime
 
 
 def getTitle(url):
@@ -19,8 +21,39 @@ def getTitle(url):
     if not title: return False #false means that the page searched doesn't have a title
     elif "404" in title[0] or "403" in title[0] or "no such app" in title[0].lower(): return -1
     else: return title[0]#if the page does have a title strip it form the list
-   # else: return title[0].strip('"').strip("'") #if the page does have a title strip it form the list
-    #else: return title[0].replace("'", '').replace('"', '').strip('"').strip("'") #if the page does have a title strip it form the list
+
+
+def getDate(tree):
+    #dateText: strips unneeded text from scraped value leaving only date
+    def getMonth(dateText):
+        month = dateText[0:dateText.index(' '):1].lower()
+        if 'jan' in month: return '1'
+        elif 'feb' in month: return '2'
+        elif 'mar' in month: return '3'
+        elif 'apr' in month: return '4'
+        elif 'may' in month: return '5'
+        elif 'jun' in month: return '6'
+        elif 'jul' in month: return '7'
+        elif 'aug' in month: return '8'
+        elif 'sep' in month: return '9'
+        elif 'oct' in month: return '10' 
+        elif 'nov' in month: return '11'
+        elif 'dec' in month: return '12'
+        else: return 'There could not be found any month abbreviation in %s' % dateText
+
+    def getDay(dateText):
+        return dateText[dateText.index(' ') + 1 : dateText.index(',') : 1]
+
+    def getYear(dateText):
+        return dateText[dateText.index(',') + 2 : : 1]
+
+    def getDateFormatted(dateText):
+        return getMonth(dateText) + '/' + getDay(dateText) + '/' + getYear(dateText)
+
+    dateText = tree.xpath('//*[@id="watch-uploader-info"]/strong/text()')[0][13::]
+    dateFormatted = getDateFormatted(dateText)
+    return str(int(time.mktime(datetime.datetime.strptime(dateFormatted, "%m/%d/%Y").timetuple())))
+
 
 
 #gatherDONGs: takes the url of a youtube video and gathers all the links from the videos description
@@ -28,6 +61,7 @@ def getTitle(url):
 def gatherDONGs(DONGVidUrl):
     page = requests.get(DONGVidUrl)
     tree = html.fromstring(page.content)
+    sauceVidDate = getDate(tree) #get the date that the vsauce video was posted (used for sorting in front end)
     print "Gathering DONGs..."
     DONGList = tree.xpath('//*[@id="eow-description"]/a/@href') #this is every link in the description of the video
     DONGList = removeDups(cleanDONGLinks(DONGList)) #this removes the non-DONG links
@@ -41,7 +75,7 @@ def gatherDONGs(DONGVidUrl):
         except:
             id = False
         if id != False and id not in storedIds:
-            DONGLinkClassArray.append(DONGLink(DONGVidUrl, var)) #create an array of DONGLink's
+            DONGLinkClassArray.append(DONGLink(DONGVidUrl, var, sauceVidDate)) #create an array of DONGLink's
 
     sqlInsertDONGLinkList(DONGLinkClassArray)
     return DONGLinkClassArray
@@ -199,9 +233,10 @@ def norm(str):
 
 class DONGLink:
     'This object describes the characteristics of a DONG link'
-    def __init__(self, parentVidUrl, url):
+    def __init__(self, parentVidUrl, url, sauceDate):
         self.video = parentVidUrl
         self.link = url
+        self.sauceDate = sauceDate
         try:
             self.id = hashlib.sha1(url).hexdigest()
         except:
@@ -239,8 +274,8 @@ class DONGLink:
         print "Inserting..."
         if self.title != -1:
             try:
-                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s, video = %s'
-                cur.execute(cmd, (self.link, self.id, self.title, self.video))
+                cmd = 'INSERT IGNORE INTO links SET link = %s, id = %s, title = %s, video = %s, sauceDate = %s'
+                cur.execute(cmd, (self.link, self.id, self.title, self.video, self.sauceDate))
                 print "success"
             except:
                 self.writeErrorMessage()
