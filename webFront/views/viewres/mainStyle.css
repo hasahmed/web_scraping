@@ -48,15 +48,21 @@ td.link-num{
 } 
 
 td.linkData{
-    padding:5px;
+    padding:10px;
     font-size: 16px;
+}
+.inline{
+    display: inline;
 }
 .dongs{
     text-decoration: none;
     color: black;
 }
+.link-col{
+    /*display: inline-block;*/
+}
 .truncate{
-    display: block;
+    display: inline-block;
     width: 600px;
     white-space: nowrap;
     overflow: hidden;
