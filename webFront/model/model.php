@@ -29,9 +29,9 @@ function getFaveIdArray($username){
 function getVideo($linkID){
     $con = connect();
     $query = "select video from links where id=\"$linkID\"";
-    $resource = mysql_query($query, $con);
-    $result = mysql_fetch_assoc($resource);
-    mysql_close($con);
+    $resource = mysqli_query($con, $query);
+    $result = mysqli_fetch_assoc($resource);
+    mysqli_close($con);
     return $result['video'];
 }
 
@@ -180,13 +180,8 @@ function htmlTableGen($linkObjs, $showAll = false, $faves = false){
 
 function getLinkArray(){
     $con = connect();
-    $result = mysqli_query($con, "SELECT link, id, title FROM links");
+    $result = mysqli_query($con, "SELECT link, id, title FROM links ORDER BY sauce_date desc");
     $array = array();
-    /*
-    while($row = mysqli_fetch_assoc($result)){
-        array_push($array, new Link($row['link'], $row['id'], $row['title']));
-    }
-     */
     $numRows = mysqli_num_rows($result);
     for($i = 0; $i < $numRows; $i++){
         $row = mysqli_fetch_assoc($result);

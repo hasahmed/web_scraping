@@ -1,19 +1,20 @@
 var showAbout = function(element){
     var linkNum = stripNum(element.id);
     var par = document.getElementById("linknum" + linkNum);
-    /*
-    if(par.getAttribute('hidden') == null){
-       par.setAttribute('hidden', 'true'); 
-       return;
-    }
-    */
     var vis = par.getAttribute('hidden');
-    if(par.children[0] != undefined){
-        if(vis === 'true' || vis === ''){
-            par.setAttribute('hidden', true);
+    if(vis === 'true' || vis === ''){
+        par.removeAttribute('hidden'); //paragraph is not visible so make it visible
+        if(par.children[0] === undefined){
+            //there is no link so go on to get the link from the server
+        } else{
+            //the link is already there so just return here
             return;
-        } else par.removeAttribute('hidden');
-    }
+        }
+
+    } else{//paragraph is visible so make it not
+        par.setAttribute('hidden', 'true');
+        return;
+    } 
     var ele = document.getElementById("links" + linkNum);
     var linkID = ele.dataset.linkId;
     var serverString = "../controller/";
@@ -29,7 +30,6 @@ var showAbout = function(element){
                 a.href = data;
                 a.title = "Vsauce Video";
                 var paraText = document.createTextNode("DONG Video: ")
-                par.removeAttribute('hidden');
                 par.appendChild(paraText);
                 par.appendChild(a);
             }
