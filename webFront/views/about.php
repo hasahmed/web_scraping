@@ -18,7 +18,7 @@ p{
 <head>
 <title>DONG Bucket - About</title>
 <?php 
-    require('viewres/templates.php');
+    require('viewres'. DIRECTORY_SEPARATOR .'templates.php');
     insertViewRequires();
     insertSubNavBar();
 ?>

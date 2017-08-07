@@ -15,7 +15,7 @@
     if (!$result)
         die('invalid query: '. mysql_error($con));
     else{
-        echo "<script> location.href=\"{$_SERVER['.']}/phpworkspace/webscrapping/webFront/main.php\"</script>";
+        echo "<script> location.href=\"../views/main.php\"</script>";
     }
     mysql_close($con);
 ?>

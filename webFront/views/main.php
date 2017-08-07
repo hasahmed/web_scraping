@@ -5,9 +5,8 @@ session_start();
 
 <?php
 //require('../controller/util.php');
-require('../model/model.php');
-require('viewres/templates.php');
-//$links = get_links();
+require('..'. DIRECTORY_SEPARATOR .'model' . DIRECTORY_SEPARATOR . 'model.php');
+require('viewres'. DIRECTORY_SEPARATOR .'templates.php');
 $linkObjs = getLinkArray();
 ?>
 <html>

@@ -18,9 +18,9 @@ function takeToLogin($folder = '/', $eval = false){
     $loginLoc = "login.php";
     $qu = "\"";
     if ($folder == '/' || 'top')
-        $prestr = './'; 
+        $prestr = DIRECTORY_SEPARATOR; 
     else if($folder == 'controller' || $folder == 'model' || $folder == 'views')
-        $preStr = '../';
+        $preStr = '..'. DIRECTORY_SEPARATOR;
     if(!$eval){
         $scriptOpen = "<script>";
         $scriptClose = ";</script>";

@@ -1,8 +1,8 @@
 <!doctype html>
 <?php
-require('../model/model.php');
-require('viewres/templates.php');
-$linkObjs = getLinkArray();
+require('..'. DIRECTORY_SEPARATOR .'model' . DIRECTORY_SEPARATOR .'model.php');
+require('viewres'. DIRECTORY_SEPARATOR .'templates.php');
+$inkObjs = getLinkArray();
 $linkObjs = tenRandomElements($linkObjs);
 ?>
 <html>

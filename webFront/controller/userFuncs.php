@@ -1,5 +1,4 @@
 <?php 
-
 define('SALT', 'w5');
 
 

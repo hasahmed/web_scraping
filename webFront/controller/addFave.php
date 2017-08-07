@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require('../model/model.php');
+require('..'. DIRECTORY_SEPARATOR .'model'. DIRECTORY_SEPARATOR. 'model.php');
 if ($_SESSION['user'] == NULL){
     takeToLogin('controller', true);
     exit();

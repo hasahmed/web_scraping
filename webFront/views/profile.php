@@ -3,7 +3,7 @@ session_start();
 if(!isset($_SESSION['user']) OR $_SESSION['user'] == NULL){
    echo "<script>location.href='login.php'</script>";
 }
-require('viewres/templates.php');
+require('viewres'. DIRECTORY_SEPARATOR .'templates.php');
 ?>
 <!DOCTYPE html>
 <html>

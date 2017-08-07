@@ -1,5 +1,5 @@
 <?php
-require('../controller/util.php');
+require('..'. DIRECTORY_SEPARATOR .'controller'. DIRECTORY_SEPARATOR .'util.php');
 
 define('SALT', 'w5');
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('viewres/templates.php');
+require('viewres'. DIRECTORY_SEPARATOR .'templates.php');
 ?>
 <!DOCTYPE html>
 <html>
