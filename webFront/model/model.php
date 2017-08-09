@@ -4,7 +4,7 @@ require('..'. DIRECTORY_SEPARATOR .'controller'. DIRECTORY_SEPARATOR .'util.php'
 define('SALT', 'w5');
 
 function connect(){
-  $con = mysqli_connect('silo.soic.indiana.edu', 'whoever', 'wha55up', 'DONG', 32904);
+  $con = mysqli_connect(/*'silo.soic.indiana.edu' */ 'localhost', 'whoever', 'wha55up', 'DONG', 32904);
   if (!$con){ 
       die('Could not connect: ' . mysqli_connect_error());
   }
